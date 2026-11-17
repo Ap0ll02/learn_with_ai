@@ -1,26 +1,41 @@
 # Learn with AI
 
-A Codex skill for finishing real work while building the understanding to explain, adapt, and check it. Inspired by [*How AI Impacts Skill Formation*](https://arxiv.org/abs/2601.20245) by Judy Hanwen Shen and Alex Tamkin.
+A Codex skill for developers who value proficiency and ownership while using AI. It defaults to mentorship: concepts, progressive hints, and read-only review. You can ask for collaboration, delegated chores, or a complete solution whenever you want.
 
-On first activation in each conversation, the skill asks you to choose **Strict Learning** or **Skip mode**. Strict Learning keeps you doing the reasoning and does not provide complete solutions or one-off bypasses. Skip mode lets you request full answers or skip learning prompts. You can explicitly switch modes at any time.
+## Install on Linux with Fish
 
-The choice is saved in `.learn-with-ai/learn.md` at the project's Git worktree root (or the current directory outside Git). This file contains only the mode. A new conversation asks again, even when a previous choice is saved. If you do not want this local preference tracked in your project repository, add `.learn-with-ai/` to that project's `.gitignore`.
+Clone into Codex's user skills directory, then start a new Codex session:
 
-The paper's experiment was limited to short programming tasks; the skill does not claim its results generalize to every domain.
-
-## Install
-
-Clone this repository into your Codex skills directory:
-
-```sh
+```fish
+mkdir -p ~/.codex/skills
 git clone https://github.com/Ap0ll02/learn_with_ai.git ~/.codex/skills/learn-with-ai
 ```
 
-Start a new Codex session and invoke `$learn-with-ai` when you want to learn while completing a task. The skill may also be selected automatically for relevant requests.
+If you already installed it, update it with:
 
-## Contents
+```fish
+git -C ~/.codex/skills/learn-with-ai pull
+```
 
-- [`SKILL.md`](SKILL.md): behavior and invocation guidance
-- [`references/paper-findings.md`](references/paper-findings.md): evidence and limitations
-- [`agents/openai.yaml`](agents/openai.yaml): display metadata
+The directory name and the `name` in `SKILL.md` are both `learn-with-ai`. Invoke it with `$learn-with-ai`, or ask to learn while coding. Codex can also select it for a relevant request. To use the repository policy in another project, copy [`AGENTS.md`](AGENTS.md) to that project's root and adapt it to your preferences. Installing the skill alone does not copy that policy into other projects.
+
+## Try it
+
+- “Use `$learn-with-ai`. Explain this API and give me one hint for the next step.”
+- “Review my diff for correctness and learning gaps. Keep it read-only.”
+- “I have a hypothesis about this failure. Help me test it before showing a fix.”
+- “Implement this part for me, then explain the decisions I should understand.”
+
+The last request authorizes implementation. Requests to explain, plan, or review do not authorize source edits.
+
+## Why this approach
+
+Shen and Tamkin's [*How AI Impacts Skill Formation*](https://arxiv.org/abs/2601.20245) found that, in a randomized study of short tasks with an unfamiliar Python library, AI-assisted participants scored lower on an immediate knowledge quiz without a statistically significant average completion-time gain. Their observed AI-use patterns suggest that active reasoning matters, but the patterns were descriptive, not randomized treatments. The mentorship workflow here is a practical design choice, not a tested intervention. See [`references/paper-findings.md`](references/paper-findings.md) for details and limits.
+
+## Files
+
+- [`SKILL.md`](SKILL.md): reusable skill instructions
+- [`AGENTS.md`](AGENTS.md): repository policy for AI-assisted work
+- [`references/paper-findings.md`](references/paper-findings.md): study summary and evidence limits
+- [`agents/openai.yaml`](agents/openai.yaml): Codex display metadata
 - [`LICENSE`](LICENSE): MIT license
